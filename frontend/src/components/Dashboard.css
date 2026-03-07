@@ -1,0 +1,367 @@
+.dashboard {
+  padding: 0;
+}
+
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card.tirelire {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fbbf24;
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.stat-card.tirelire .stat-label {
+  color: #92400e;
+  font-weight: 600;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+.stat-icon.success {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.stat-icon.danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.stat-icon.info {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.stat-icon.piggy {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+  color: #92400e;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.stat-card.tirelire .stat-value {
+  color: #92400e;
+}
+
+.stat-trend {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.stat-trend.positive {
+  color: var(--success);
+}
+
+.stat-trend.success {
+  color: #92400e;
+  font-weight: 600;
+}
+
+.stat-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.stat-count.danger {
+  color: var(--danger);
+}
+
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.section-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.section-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.transactions-list,
+.expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--background);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.transaction-item:hover {
+  background: var(--border);
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.transaction-category {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.transaction-description {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.transaction-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.transaction-amount {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.transaction-amount.income {
+  color: var(--success);
+}
+
+.transaction-amount.expense {
+  color: var(--danger);
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--background);
+  border-radius: 8px;
+}
+
+.expense-category {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.expense-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-secondary);
+}
+
+/* ===================================
+   SANTÉ FINANCIÈRE
+   =================================== */
+
+.health-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.health-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.health-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.health-header svg {
+  color: #10b981;
+}
+
+.health-body {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.health-circle-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+}
+
+.health-circle-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.health-score-num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.health-score-max {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.health-label {
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.health-criteria {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.health-criterion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.criterion-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.criterion-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.criterion-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.criterion-track {
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.criterion-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.criterion-sub {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .health-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+}

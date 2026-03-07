@@ -1,0 +1,792 @@
+.goals-page {
+  padding: 0;
+}
+
+/* ===================================
+   SECTION TIRELIRE VIRTUELLE
+   =================================== */
+
+.tirelire-section {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fbbf24;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.tirelire-header h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 32px;
+}
+
+.tirelire-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* COCHON ANIMÉ */
+.piggy-animation {
+  font-size: 80px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.piggy-animation.happy .piggy {
+  animation: bounce 0.5s ease-in-out 3;
+}
+
+.piggy-animation.crying .piggy {
+  animation: shake 0.5s ease-in-out 3;
+}
+
+.piggy-animation.party .piggy {
+  animation: spin 1s ease-in-out 2;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* MONTANT TOTAL */
+.tirelire-amount {
+  text-align: center;
+}
+
+.amount-big {
+  font-size: 56px;
+  font-weight: 800;
+  color: #92400e;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 4px rgba(146, 64, 14, 0.2);
+}
+
+.amount-label {
+  font-size: 18px;
+  color: #78350f;
+  font-weight: 600;
+}
+
+/* GRAPHIQUE DONUT */
+.tirelire-chart {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tirelire-chart h3 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.no-chart {
+  text-align: center;
+  padding: 40px;
+  color: #78350f;
+  font-size: 14px;
+}
+
+/* ACTIONS RAPIDES */
+.tirelire-actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-action.secondary {
+  background: white;
+  color: #92400e;
+  border: 2px solid #fbbf24;
+}
+
+.btn-action.secondary:hover:not(:disabled) {
+  background: #fef3c7;
+  transform: translateY(-2px);
+}
+
+.btn-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===================================
+   CARTES RÉCAPITULATIVES
+   =================================== */
+
+.goals-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ===================================
+   HEADER OBJECTIFS
+   =================================== */
+
+.goals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.goals-header > div {
+  min-width: 0;
+}
+
+.goals-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.goals-header .btn-primary {
+  flex-shrink: 0;
+  white-space: nowrap;
+  width: auto !important;
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #1f2937;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.goals-header .btn-primary:hover {
+  background: #374151;
+  transform: translateY(-1px);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ===================================
+   GRID DES OBJECTIFS
+   =================================== */
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.goal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.goal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.goal-card.completed {
+  border: 2px solid var(--success);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.goal-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.goal-icon {
+  font-size: 24px;
+}
+
+/* PROGRESSION */
+.goal-progress-section {
+  margin-bottom: 20px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.progress-percent {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: var(--background);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+
+/* MONTANTS */
+.goal-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.amount-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.amount-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.amount-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* DEADLINE */
+.goal-deadline {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deadline-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.deadline-icon {
+  font-size: 16px;
+}
+
+.deadline-date,
+.deadline-days {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ACTIONS DES OBJECTIFS */
+.goal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-add-funds {
+  flex: 1;
+  padding: 12px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-funds:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-delete {
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+.btn-completed {
+  flex: 1;
+  padding: 10px;
+  background: var(--success);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-completed:hover {
+  background: #059669;
+}
+
+.btn-use {
+  flex: 1;
+  padding: 10px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-use:hover {
+  background: #d97706;
+}
+
+/* NO GOALS */
+.no-goals {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  background: var(--card-bg);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+}
+
+.no-goals p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* ===================================
+   SECTIONS ARCHIVÉES
+   =================================== */
+
+.section-header {
+  margin: 40px 0 20px 0;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.section-header.completed {
+  background: #f0fdf4;
+  border-color: var(--success);
+}
+
+.section-header.deleted {
+  background: #fef2f2;
+  border-color: var(--danger);
+}
+
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.archived-list {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.archived-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.archived-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.archived-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.archived-item.completed .archived-badge {
+  background: var(--success);
+  color: white;
+}
+
+.archived-item.deleted .archived-badge {
+  background: var(--danger);
+  color: white;
+}
+
+.archived-item h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.archived-item p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.archived-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.archived-details p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.archived-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-details,
+.btn-restore {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-details {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-details:hover {
+  background: #2563eb;
+}
+
+.btn-restore {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-restore:hover {
+  background: var(--secondary);
+}
+
+/* ===================================
+   CONSEIL DU JOUR
+   =================================== */
+
+.tip-box {
+  background: var(--primary);
+  color: white;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.tip-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tip-icon {
+  font-size: 28px;
+}
+
+.tip-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tip-content {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* ===================================
+   MODALS
+   =================================== */
+
+.modal-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.warning-box {
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  color: #92400e;
+  font-size: 13px;
+  text-align: center;
+}
+
+.modal-content.large {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* ===================================
+   HISTORIQUE
+   =================================== */
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.history-item {
+  background: var(--background);
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid;
+}
+
+.history-item.add {
+  border-color: var(--success);
+}
+
+.history-item.withdraw,
+.history-item.use {
+  border-color: var(--danger);
+}
+
+.history-date {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.history-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.history-amount {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.history-amount.positive {
+  color: var(--success);
+}
+
+.history-amount.negative {
+  color: var(--danger);
+}
+
+.history-goal {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.history-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.no-history {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}
+
+/* ===================================
+   LOADING & DIVERS
+   =================================== */
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-secondary);
+}
+
+/* Toast customization */
+.Toastify__toast {
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.Toastify__toast--success {
+  background: var(--success);
+}
+
+.Toastify__toast--error {
+  background: var(--danger);
+}
+
+.Toastify__toast--info {
+  background: #3b82f6;
+}
+
+.Toastify__toast--warning {
+  background: #f59e0b;
+}
+.btn-show-history {
+  padding: 12px 24px;
+  background: var(--background);
+  border: 2px dashed var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-show-history:hover {
+  background: var(--card-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-delete-permanent {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete-permanent:hover {
+  background: var(--danger);
+  color: white;
+}

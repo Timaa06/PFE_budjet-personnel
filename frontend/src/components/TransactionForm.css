@@ -1,0 +1,45 @@
+.transaction-form {
+  padding: 0;
+}
+
+.transaction-form h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.type-btn {
+  padding: 12px;
+  background: var(--background);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+
+.type-btn:hover {
+  border-color: var(--primary);
+  background: var(--card-bg);
+}
+
+.type-btn.active.income {
+  background: #d1fae5;
+  border-color: var(--success);
+  color: #059669;
+}
+
+.type-btn.active.expense {
+  background: #fee2e2;
+  border-color: var(--danger);
+  color: #dc2626;
+}

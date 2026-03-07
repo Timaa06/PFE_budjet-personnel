@@ -1,0 +1,384 @@
+.landing-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  overflow-x: hidden;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.logo-landing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon-landing {
+  width: 48px;
+  height: 48px;
+  background: #1e293b;
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.15);
+}
+
+.logo-text-landing {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.btn-login {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: transparent;
+  color: #1e293b;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-login:hover {
+  background: #1e293b;
+  color: white;
+  border-color: #1e293b;
+}
+
+/* ===================================
+   HERO SECTION
+   =================================== */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding: 100px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+  background: white;
+}
+
+.hero-content {
+  color: #1e293b;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  color: #0f172a;
+}
+
+.highlight {
+  color: #10b981;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: #64748b;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-large {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary-large:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary-large {
+  padding: 16px 32px;
+  background: transparent;
+  color: #1e293b;
+  border: 2px solid #1e293b;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary-large:hover {
+  background: #1e293b;
+  color: white;
+}
+
+/* ===================================
+   HERO IMAGE / MOCKUP
+   =================================== */
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mockup {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.mockup-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.mockup-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e5e7eb;
+}
+
+.mockup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mockup-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.mockup-card.piggy {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fbbf24;
+}
+
+.mockup-label {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.mockup-card.piggy .mockup-label {
+  color: #92400e;
+  font-weight: 600;
+}
+
+.mockup-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.mockup-card.piggy .mockup-value {
+  color: #92400e;
+}
+
+/* ===================================
+   FEATURES SECTION
+   =================================== */
+
+.features {
+  padding: 100px 60px;
+  background: #f8fafc;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 60px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border-color: #10b981;
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  background: #1e293b;
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feature-card:hover .feature-icon {
+  background: #10b981;
+}
+
+.feature-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.feature-description {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ===================================
+   CTA SECTION
+   =================================== */
+
+.cta {
+  padding: 100px 60px;
+  background: #1e293b;
+  text-align: center;
+  color: white;
+}
+
+.cta-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.cta-subtitle {
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: #cbd5e1;
+}
+
+.btn-cta {
+  padding: 18px 40px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-cta:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+
+.landing-footer {
+  padding: 32px 60px;
+  background: #0f172a;
+  text-align: center;
+  color: #94a3b8;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 968px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 60px 32px;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .landing-header {
+    padding: 16px 32px;
+  }
+
+  .features {
+    padding: 60px 32px;
+  }
+
+  .cta {
+    padding: 60px 32px;
+  }
+
+  .cta-title {
+    font-size: 36px;
+  }
+
+  .landing-footer {
+    padding: 24px 32px;
+  }
+}
