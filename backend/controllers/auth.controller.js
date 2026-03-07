@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const db = require('../config/db'); // ← AJOUTE CETTE LIGNE !
 const User = require('../models/user.model');
 
 // INSCRIPTION
@@ -28,29 +29,44 @@ exports.register = (req, res) => {
 };
 
 // CONNEXION
-exports.login = (req, res) => {
-    const { email, password } = req.body;
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
 
-    User.findByEmail(email, (err, user) => {
-        if (err) {
-            return res.status(500).json({ message: 'Erreur base de données' });
-        }
-        
-        if (!user) {
-            return res.status(401).json({ message: 'Utilisateur non trouvé' });
-        }
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email et mot de passe requis' });
+  }
 
-        const isValid = bcrypt.compareSync(password, user.password);
-        if (!isValid) {
-            return res.status(401).json({ message: 'Mot de passe incorrect' });
-        }
+  const sql = 'SELECT * FROM users WHERE email = ?';
+  
+  db.query(sql, [email], async (err, results) => {
+    if (err) {
+      console.error('Erreur SQL:', err);
+      return res.status(500).json({ error: err.message });
+    }
 
-        const token = jwt.sign(
-            { id: user.id },
-            process.env.JWT_SECRET,
-            { expiresIn: '365d' }
-        );
+    if (results.length === 0) {
+      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+    }
 
-        res.json({ token });
+    const user = results[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      console.log('❌ Mot de passe invalide pour:', email); // Debug
+      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '365d' }
+    );
+
+    console.log('✅ Connexion réussie pour:', email); // Debug
+
+    res.json({
+      token,
+      user: { id: user.id, email: user.email }
     });
+  });
 };

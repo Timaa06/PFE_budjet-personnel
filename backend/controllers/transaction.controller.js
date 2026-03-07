@@ -1,9 +1,13 @@
 const db = require('../config/db');
 
 //  Créer une transaction 
-exports.createTransaction = (req, res) => {
+exports.createTransaction = async (req, res) => {
   const { type, amount, category_id, description, date } = req.body;
   const userId = req.user.id;
+
+  if (!type || !amount || !category_id) {
+    return res.status(400).json({ message: 'Données manquantes' });
+  }
 
   const sql = `
     INSERT INTO transactions (user_id, type, amount, category_id, description, date)
@@ -11,9 +15,12 @@ exports.createTransaction = (req, res) => {
   `;
 
   db.query(sql, [userId, type, amount, category_id, description, date], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      console.error('Erreur SQL:', err);
+      return res.status(500).json({ error: err.message });
+    }
     res.status(201).json({
-      message: 'Transaction ajoutée',
+      message: 'Transaction créée',
       id: result.insertId
     });
   });
