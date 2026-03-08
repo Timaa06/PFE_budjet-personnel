@@ -16,23 +16,34 @@ const actionLabel = {
   register:      { label: 'Inscription', color: '#2563eb' },
 };
 
-// ─── Mini bar chart CSS ─────────────────────────────────────────────────────
+const MONTH_FR = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+const toMonthName = (str) => MONTH_FR[parseInt(str?.slice(5)) - 1] || str?.slice(5);
+
+// ─── Graphique en colonnes ───────────────────────────────────────────────────
 function BarChart({ data, color, label }) {
   if (!data || data.length === 0) return <p className="no-data-small">Aucune donnée</p>;
+  const BAR_MAX_H = 110;
   const max = Math.max(...data.map(d => d.count), 1);
   return (
     <div className="bar-chart">
       <div className="bar-chart-title">{label}</div>
       <div className="bar-chart-bars">
-        {data.map((d, i) => (
-          <div key={i} className="bar-col">
-            <div className="bar-wrap">
-              <div className="bar-fill" style={{ height: `${(d.count / max) * 100}%`, background: color }} />
+        {data.map((d, i) => {
+          const h = Math.max(Math.round((d.count / max) * BAR_MAX_H), 10);
+          return (
+            <div key={i} className="bar-col">
+              <span className="bar-val">{d.count}</span>
+              <div
+                className="bar-fill"
+                style={{
+                  height: `${h}px`,
+                  background: `linear-gradient(to top, ${color}, ${color}99)`
+                }}
+              />
+              <span className="bar-month">{toMonthName(d.month)}</span>
             </div>
-            <span className="bar-val">{d.count}</span>
-            <span className="bar-month">{d.month?.slice(5)}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
