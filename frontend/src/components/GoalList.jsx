@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   Target, Plus, CheckCircle, Calendar, TrendingUp, Trash2,
   Wallet, BarChart2, RotateCcw, BookOpen, Archive, Lightbulb,
-  Check, AlertTriangle, PieChart, BadgeDollarSign
+  Check, AlertTriangle, PieChart, BadgeDollarSign, Trophy
 } from 'lucide-react';
 import './GoalList.css';
 
@@ -598,33 +598,76 @@ function GoalList() {
         )}
       </div>
 
-      {/* OBJECTIFS COMPLÉTÉS */}
+      {/* PALMARÈS — OBJECTIFS ATTEINTS */}
       {completedGoals.length > 0 && (
         <>
-          <div className="section-header completed">
-            <h2><CheckCircle size={18} /> OBJECTIFS COMPLÉTÉS ({completedGoals.length})</h2>
+          {/* BANNIÈRE STATS */}
+          <div className="palmares-banner">
+            <div className="palmares-stat">
+              <span className="palmares-num">{completedGoals.length}</span>
+              <span className="palmares-label">Objectif{completedGoals.length > 1 ? 's' : ''} atteint{completedGoals.length > 1 ? 's' : ''}</span>
+            </div>
+            <div className="palmares-divider" />
+            <div className="palmares-stat">
+              <span className="palmares-num">
+                {completedGoals.reduce((s, g) => s + parseFloat(g.target_amount || 0), 0).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} €
+              </span>
+              <span className="palmares-label">Total économisé</span>
+            </div>
+            <div className="palmares-divider" />
+            <div className="palmares-stat">
+              <span className="palmares-num">
+                {completedGoals.reduce((s, g) => s + parseFloat(g.target_amount || 0), 0) > 0
+                  ? Math.round(completedGoals.reduce((s, g) => s + parseFloat(g.target_amount || 0), 0) / completedGoals.length).toLocaleString('fr-FR')
+                  : 0} €
+              </span>
+              <span className="palmares-label">Moyenne par objectif</span>
+            </div>
           </div>
-          <div className="archived-list">
-            {completedGoals.map(goal => (
-              <div key={goal.id} className="archived-item completed">
-                <div className="archived-info">
-                  <span className="archived-badge"><CheckCircle size={13} /> COMPLÉTÉ</span>
-                  <h4>{goal.name}</h4>
-                  <div className="archived-details">
-                    <p><Calendar size={13} /> Atteint le {goal.completed_at ? new Date(goal.completed_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Date inconnue'}</p>
-                    <p>💰 Montant : {parseFloat(goal.target_amount).toFixed(2)} €</p>
+
+          {/* HEADER */}
+          <div className="section-header palmares">
+            <h2><Trophy size={18} /> PALMARÈS — OBJECTIFS ATTEINTS ({completedGoals.length})</h2>
+          </div>
+
+          {/* GRILLE TROPHÉES */}
+          <div className="palmares-grid">
+            {completedGoals.map(goal => {
+              const amount = parseFloat(goal.target_amount || 0);
+              const medal = amount >= 1000
+                ? { color: '#d97706', border: '#fbbf24', bg: 'linear-gradient(135deg, #fffbeb, #fef3c7)', label: 'Or' }
+                : amount >= 500
+                ? { color: '#64748b', border: '#cbd5e1', bg: 'linear-gradient(135deg, #f8fafc, #f1f5f9)', label: 'Argent' }
+                : { color: '#92400e', border: '#fde68a', bg: 'linear-gradient(135deg, #fefce8, #fef9c3)', label: 'Bronze' };
+              return (
+                <div key={goal.id} className="trophy-card" style={{ background: medal.bg, borderColor: medal.border }}>
+                  <div className="trophy-top">
+                    <div className="trophy-icon" style={{ color: medal.color }}>
+                      <Trophy size={32} />
+                    </div>
+                    <span className="medal-label" style={{ background: medal.border, color: medal.color }}>{medal.label}</span>
+                  </div>
+                  <h3 className="trophy-name">{goal.name}</h3>
+                  <div className="trophy-amount" style={{ color: medal.color }}>{amount.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</div>
+                  <div className="trophy-date">
+                    <Calendar size={12} />
+                    {goal.completed_at
+                      ? new Date(goal.completed_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+                      : 'Date inconnue'}
+                  </div>
+                  <div className="trophy-actions">
+                    {parseFloat(goal.current_amount || 0) > 0 && (
+                      <button className="btn-use-small" onClick={() => handleUseGoal(goal)}>
+                        <Wallet size={12} /> Utiliser
+                      </button>
+                    )}
+                    <button className="btn-restore-small" onClick={() => handleRestoreGoal(goal)}>
+                      <RotateCcw size={12} /> Réactiver
+                    </button>
                   </div>
                 </div>
-                <div className="archived-actions">
-                  <button className="btn-details" onClick={() => alert('Fonctionnalité à venir')}>
-                    <BarChart2 size={14} /> Voir détails
-                  </button>
-                  <button className="btn-restore" onClick={() => handleRestoreGoal(goal)}>
-                    <RotateCcw size={14} /> Réactiver
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </>
       )}

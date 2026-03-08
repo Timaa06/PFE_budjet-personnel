@@ -6,19 +6,22 @@ import TransactionList from '../components/TransactionList';
 import TransactionForm from '../components/TransactionForm';
 import GoalList from '../components/GoalList';
 import Stats from '../components/Stats';
+import AdminDashboard from './AdminDashboard';
 import './Home.css';
-import { 
-  LayoutDashboard, 
-  CreditCard, 
-  TrendingUp, 
-  Target, 
-  Plus, 
-  User, 
-  LogOut 
+import {
+  LayoutDashboard,
+  CreditCard,
+  TrendingUp,
+  Target,
+  Plus,
+  User,
+  LogOut,
+  Shield
 } from 'lucide-react';
 
 function Home() {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
+  const isAdmin = user?.is_admin || false;
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showTransactionModal, setShowTransactionModal] = useState(false);
@@ -89,13 +92,22 @@ function Home() {
           <TrendingUp size={18} />
           <span>Statistiques</span>
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'goals' ? 'active' : ''}`}
           onClick={() => setActiveTab('goals')}
         >
           <Target size={18} />
           <span>Objectifs</span>
         </button>
+        {isAdmin && (
+          <button
+            className={`tab tab-admin ${activeTab === 'admin' ? 'active' : ''}`}
+            onClick={() => setActiveTab('admin')}
+          >
+            <Shield size={18} />
+            <span>Administration</span>
+          </button>
+        )}
       </div>
 
       {/* CONTENU */}
@@ -104,6 +116,7 @@ function Home() {
         {activeTab === 'transactions' && <TransactionList key={refreshKey} />}
         {activeTab === 'stats' && <Stats key={refreshKey} />}
         {activeTab === 'goals' && <GoalList key={refreshKey} />}
+        {activeTab === 'admin' && isAdmin && <AdminDashboard />}
       </main>
 
       {/* MODAL TRANSACTION */}

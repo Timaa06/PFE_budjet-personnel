@@ -158,6 +158,21 @@
   flex-shrink: 0;
 }
 
+.tab-admin {
+  margin-left: auto;
+  color: #7c3aed;
+}
+
+.tab-admin.active {
+  color: #7c3aed;
+  border-bottom-color: #7c3aed;
+}
+
+.tab-admin:hover {
+  color: #6d28d9;
+  background: #f5f3ff;
+}
+
 /* ===================================
    MAIN CONTENT
    =================================== */

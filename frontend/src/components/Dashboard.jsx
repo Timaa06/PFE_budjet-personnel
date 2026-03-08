@@ -44,7 +44,7 @@ function Dashboard() {
         .slice(0, 5);
       setTopExpenses(expenses);
 
-      setGoals(goalsRes.data.filter(g => g.status === 'active' || !g.status));
+      setGoals(goalsRes.data.filter(g => g.status !== 'deleted'));
       setLoading(false);
     } catch (error) {
       console.error('Erreur:', error);
@@ -57,17 +57,23 @@ function Dashboard() {
   }
 
   const balance = (summary?.total_income || 0) - (summary?.total_expense || 0);
+  const activeGoals = goals.filter(g => g.status === 'active' || !g.status);
   const totalSaved = goals.reduce((sum, goal) => sum + parseFloat(goal.current_amount || 0), 0);
   const availableBalance = balance - totalSaved;
-  const goalsProgress = goals.length > 0
-    ? Math.round(goals.reduce((sum, g) => sum + (g.progress || 0), 0) / goals.length)
+  const goalsProgress = activeGoals.length > 0
+    ? Math.round(activeGoals.reduce((sum, g) => {
+        const p = parseFloat(g.target_amount) > 0
+          ? (parseFloat(g.current_amount || 0) / parseFloat(g.target_amount)) * 100
+          : 0;
+        return sum + p;
+      }, 0) / activeGoals.length)
     : 0;
 
   const totalIncome = summary?.total_income || 0;
   const totalExpense = summary?.total_expense || 0;
   const savingsRate = totalIncome > 0 ? ((totalIncome - totalExpense) / totalIncome) * 100 : 0;
   const scoreEpargne  = Math.min(Math.max((savingsRate / 30) * 40, 0), 40);
-  const scoreObjectifs = goals.length > 0 ? (goalsProgress / 100) * 30 : 15;
+  const scoreObjectifs = activeGoals.length > 0 ? (goalsProgress / 100) * 30 : 15;
   const scoreBalance  = balance > 0 ? Math.min((balance / Math.max(totalIncome, 1)) * 30, 30) : 0;
   const healthScore = Math.round(scoreEpargne + scoreObjectifs + scoreBalance);
 
@@ -145,7 +151,7 @@ function Dashboard() {
           </div>
           <div className="stat-value">{goalsProgress}%</div>
           <div className="stat-count">
-            Progression moyenne ({goals.length} objectif{goals.length > 1 ? 's' : ''})
+            Progression moyenne ({activeGoals.length} objectif{activeGoals.length > 1 ? 's' : ''})
           </div>
         </div>
       </div>

@@ -119,6 +119,14 @@ function TransactionList() {
     return <div className="loading">Chargement...</div>;
   }
 
+  const totalPages = Math.ceil(filteredTransactions.length / PAGE_SIZE);
+  const pagedTransactions = filteredTransactions.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+  const firstItem = filteredTransactions.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const lastItem  = Math.min(currentPage * PAGE_SIZE, filteredTransactions.length);
+
   return (
     <div className="transactions-page">
       <div className="transactions-header">
@@ -179,8 +187,8 @@ function TransactionList() {
             </tr>
           </thead>
           <tbody>
-            {filteredTransactions.length > 0 ? (
-              filteredTransactions.map(transaction => (
+            {pagedTransactions.length > 0 ? (
+              pagedTransactions.map(transaction => (
                 <tr key={transaction.id}>
                   <td className="transaction-date">
                     {new Date(transaction.date).toLocaleDateString('fr-FR')}
@@ -225,6 +233,41 @@ function TransactionList() {
           </tbody>
         </table>
       </div>
+
+      {/* PAGINATION */}
+      {filteredTransactions.length > 0 && (
+        <div className="pagination-bar">
+          <span className="pagination-info">
+            Affichage de {firstItem} à {lastItem} sur {filteredTransactions.length} transaction{filteredTransactions.length > 1 ? 's' : ''}
+          </span>
+          <div className="pagination-controls">
+            <button
+              className="page-btn"
+              onClick={() => setCurrentPage(p => p - 1)}
+              disabled={currentPage === 1}
+            >
+              Précédent
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                className={`page-btn page-num ${currentPage === page ? 'active' : ''}`}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              className="page-btn"
+              onClick={() => setCurrentPage(p => p + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Suivant
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* MODALE MODIFIER */}
       {editingTransaction && (
         <div className="modal-overlay" onClick={() => setEditingTransaction(null)}>

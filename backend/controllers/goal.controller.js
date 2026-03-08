@@ -74,11 +74,11 @@ exports.getGoalById = (req, res) => {
 exports.updateGoal = (req, res) => {
   const userId = req.user.id;
   const goalId = req.params.id;
-  const { name, target_amount, current_amount, deadline } = req.body;
+  const { name, target_amount, current_amount, deadline, status, completed_at } = req.body;
 
   // Vérifier que l'objectif appartient à l'utilisateur
   const checkSql = 'SELECT id FROM goals WHERE id = ? AND user_id = ?';
-  
+
   db.query(checkSql, [goalId, userId], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length === 0) {
@@ -86,12 +86,12 @@ exports.updateGoal = (req, res) => {
     }
 
     const updateSql = `
-      UPDATE goals 
-      SET name = ?, target_amount = ?, current_amount = ?, deadline = ?
+      UPDATE goals
+      SET name = ?, target_amount = ?, current_amount = ?, deadline = ?, status = ?, completed_at = ?
       WHERE id = ? AND user_id = ?
     `;
 
-    db.query(updateSql, [name, target_amount, current_amount, deadline || null, goalId, userId], (err) => {
+    db.query(updateSql, [name, target_amount, current_amount, deadline || null, status || 'active', completed_at || null, goalId, userId], (err) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: 'Objectif mis à jour avec succès' });
     });
