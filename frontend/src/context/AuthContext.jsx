@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       const decoded = decodeToken(token);
       localStorage.setItem('token', token);
       setUser({ token, is_admin: decoded?.is_admin || false });
-      return { success: true };
+      return { success: true, is_admin: decoded?.is_admin || false };
     } catch (error) {
       return { 
         success: false, 
@@ -56,13 +56,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithToken = (token) => {
+    const decoded = decodeToken(token);
+    localStorage.setItem('token', token);
+    setUser({ token, is_admin: decoded?.is_admin || false });
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading, loginWithToken }}>
       {children}
     </AuthContext.Provider>
   );

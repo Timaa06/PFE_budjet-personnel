@@ -425,51 +425,45 @@ function GoalList() {
       {/* SECTION TIRELIRE */}
       <div className="tirelire-section">
         <div className="tirelire-header">
-          <h2> MA TIRELIRE VIRTUELLE</h2>
-        </div>
-
-        <div className="tirelire-content">
+          <h2>MA TIRELIRE VIRTUELLE</h2>
           <div className={`piggy-animation ${piggyAnimation}`}>
             <div className="piggy">
-              {piggyAnimation === 'idle' && '🐷'}
-              {piggyAnimation === 'happy' && '😊🐷'}
+              {piggyAnimation === 'idle'   && '🐷'}
+              {piggyAnimation === 'happy'  && '😊🐷'}
               {piggyAnimation === 'crying' && '😭🐷'}
-              {piggyAnimation === 'party' && '🎉🐷🎊'}
+              {piggyAnimation === 'party'  && '🎉🐷🎊'}
+            </div>
+          </div>
+        </div>
+        <div className="tirelire-body">
+          {/* Gauche : montant */}
+          <div className="tirelire-left">
+            <div className="tirelire-amount">
+              <div className="amount-big">{totalSaved.toFixed(2)} €</div>
+              <div className="amount-label"><BadgeDollarSign size={11} /> Épargne totale</div>
             </div>
           </div>
 
-          <div className="tirelire-amount">
-            <div className="amount-big">{totalSaved.toFixed(2)} €</div>
-            <div className="amount-label"><BadgeDollarSign size={14} /> Épargné au total</div>
-          </div>
-
-          {goals.length > 0 ? (
-            <div className="tirelire-chart">
-              <h3><PieChart size={16} /> Répartition de ton épargne</h3>
-              <div className="chart-container">
-                <Doughnut data={chartData} options={chartOptions} />
+          {/* Droite : boutons + donut */}
+          <div className="tirelire-right">
+            <div className="tirelire-actions">
+              <button className="btn-action secondary" onClick={() => setShowWithdrawModal(true)} disabled={totalSaved === 0}>
+                <Wallet size={12} /> Retirer
+              </button>
+              <button className="btn-action secondary" onClick={() => setShowHistoryModal(true)}>
+                <BarChart2 size={12} /> Historique
+              </button>
+            </div>
+            {goals.length > 0 ? (
+              <div className="tirelire-chart">
+                <h3><PieChart size={10} /> Répartition</h3>
+                <div className="chart-container">
+                  <Doughnut data={chartData} options={chartOptions} />
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="no-chart">
-              <p>Crée ton premier objectif pour voir la répartition !</p>
-            </div>
-          )}
-
-          <div className="tirelire-actions">
-            <button 
-              className="btn-action secondary"
-              onClick={() => setShowWithdrawModal(true)}
-              disabled={totalSaved === 0}
-            >
-              <Wallet size={15} /> Retirer de l'épargne
-            </button>
-            <button
-              className="btn-action secondary"
-              onClick={() => setShowHistoryModal(true)}
-            >
-              <BarChart2 size={15} /> Historique
-            </button>
+            ) : (
+              <div className="no-chart"><p>Créez un objectif pour voir la répartition</p></div>
+            )}
           </div>
         </div>
       </div>

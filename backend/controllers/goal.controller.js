@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 // ✅ Créer un objectif
 exports.createGoal = (req, res) => {
-  const { name, target_amount, deadline } = req.body;
+  const { name, target_amount, deadline, start_date } = req.body;
   const userId = req.user.id;
 
   if (!name || !target_amount) {
@@ -10,11 +10,11 @@ exports.createGoal = (req, res) => {
   }
 
   const sql = `
-    INSERT INTO goals (user_id, name, target_amount, current_amount, deadline)
-    VALUES (?, ?, ?, 0, ?)
+    INSERT INTO goals (user_id, name, target_amount, current_amount, start_date, deadline)
+    VALUES (?, ?, ?, 0, ?, ?)
   `;
 
-  db.query(sql, [userId, name, target_amount, deadline || null], (err, result) => {
+  db.query(sql, [userId, name, target_amount, start_date || null, deadline || null], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.status(201).json({
       message: 'Objectif créé',
@@ -22,6 +22,7 @@ exports.createGoal = (req, res) => {
       name,
       target_amount,
       current_amount: 0,
+      start_date,
       deadline
     });
   });
@@ -74,7 +75,7 @@ exports.getGoalById = (req, res) => {
 exports.updateGoal = (req, res) => {
   const userId = req.user.id;
   const goalId = req.params.id;
-  const { name, target_amount, current_amount, deadline, status, completed_at } = req.body;
+  const { name, target_amount, current_amount, deadline, start_date, status, completed_at } = req.body;
 
   // Vérifier que l'objectif appartient à l'utilisateur
   const checkSql = 'SELECT id FROM goals WHERE id = ? AND user_id = ?';
@@ -87,11 +88,11 @@ exports.updateGoal = (req, res) => {
 
     const updateSql = `
       UPDATE goals
-      SET name = ?, target_amount = ?, current_amount = ?, deadline = ?, status = ?, completed_at = ?
+      SET name = ?, target_amount = ?, current_amount = ?, start_date = ?, deadline = ?, status = ?, completed_at = ?
       WHERE id = ? AND user_id = ?
     `;
 
-    db.query(updateSql, [name, target_amount, current_amount, deadline || null, status || 'active', completed_at || null, goalId, userId], (err) => {
+    db.query(updateSql, [name, target_amount, current_amount, start_date || null, deadline || null, status || 'active', completed_at || null, goalId, userId], (err) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: 'Objectif mis à jour avec succès' });
     });

@@ -10,10 +10,12 @@ import './AdminDashboard.css';
 const isBanned = (u) => u.banned_until && new Date(u.banned_until) > new Date();
 
 const actionLabel = {
-  login_success: { label: 'Connexion', color: '#16a34a' },
-  login_failed:  { label: 'Échec connexion', color: '#dc2626' },
-  login_blocked: { label: 'Accès bloqué', color: '#ea580c' },
-  register:      { label: 'Inscription', color: '#2563eb' },
+  login_success:            { label: 'Connexion',         color: '#16a34a' },
+  login_failed:             { label: 'Échec connexion',   color: '#dc2626' },
+  login_blocked:            { label: 'Accès bloqué',      color: '#ea580c' },
+  register:                 { label: 'Inscription',        color: '#2563eb' },
+  password_reset_requested: { label: 'Demande reset MDP', color: '#7c3aed' },
+  password_reset_done:      { label: 'MDP réinitialisé',  color: '#0891b2' },
 };
 
 const MONTH_FR = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
@@ -70,6 +72,9 @@ function AdminDashboard() {
   const [banDays, setBanDays]     = useState(7);
   const [banReason, setBanReason] = useState('');
   const [resetModal, setResetModal] = useState(null); // { user, tempPassword }
+
+  // Filtre journal
+  const [logFilter, setLogFilter] = useState('all');
 
   // Catégories
   const [catForm, setCatForm]     = useState({ name: '', type: 'expense' });
@@ -380,22 +385,50 @@ function AdminDashboard() {
       {/* ═══ JOURNAL D'ACTIVITÉ ════════════════════════════════════════════════ */}
       {activeTab === 'logs' && (
         <div className="admin-section">
+          <div className="filter-btns" style={{ marginBottom: 16 }}>
+            {[
+              { key: 'all',      label: `Tous (${logs.length})` },
+              { key: 'reset',    label: `Réinitialisations MDP (${logs.filter(l => l.action.startsWith('password_reset')).length})` },
+              { key: 'login',    label: 'Connexions' },
+              { key: 'register', label: 'Inscriptions' },
+            ].map(f => (
+              <button key={f.key} className={`filter-btn ${logFilter === f.key ? 'active' : ''}`} onClick={() => setLogFilter(f.key)}>
+                {f.label}
+              </button>
+            ))}
+          </div>
           <table className="admin-table">
             <thead><tr><th>Date</th><th>Email</th><th>Action</th><th>IP</th><th>Détails</th></tr></thead>
             <tbody>
-              {logs.map(log => {
-                const info = actionLabel[log.action] || { label: log.action, color: '#64748b' };
-                return (
-                  <tr key={log.id}>
-                    <td className="log-date">{new Date(log.created_at).toLocaleString('fr-FR')}</td>
-                    <td className="user-email">{log.email}</td>
-                    <td><span className="log-action" style={{ color: info.color }}>{info.label}</span></td>
-                    <td className="log-ip">{log.ip_address}</td>
-                    <td className="log-details">{log.details || '—'}</td>
-                  </tr>
-                );
-              })}
-              {logs.length === 0 && <tr><td colSpan="5" className="text-center" style={{padding:'20px',color:'#94a3b8'}}>Aucune activité enregistrée</td></tr>}
+              {logs
+                .filter(log => {
+                  if (logFilter === 'all') return true;
+                  if (logFilter === 'reset') return log.action.startsWith('password_reset');
+                  if (logFilter === 'login') return log.action.startsWith('login');
+                  if (logFilter === 'register') return log.action === 'register';
+                  return true;
+                })
+                .map(log => {
+                  const info = actionLabel[log.action] || { label: log.action, color: '#64748b' };
+                  return (
+                    <tr key={log.id}>
+                      <td className="log-date">{new Date(log.created_at).toLocaleString('fr-FR')}</td>
+                      <td className="user-email">{log.email}</td>
+                      <td><span className="log-action" style={{ color: info.color }}>{info.label}</span></td>
+                      <td className="log-ip">{log.ip_address}</td>
+                      <td className="log-details">{log.details || '—'}</td>
+                    </tr>
+                  );
+                })}
+              {logs.filter(log => {
+                if (logFilter === 'all') return true;
+                if (logFilter === 'reset') return log.action.startsWith('password_reset');
+                if (logFilter === 'login') return log.action.startsWith('login');
+                if (logFilter === 'register') return log.action === 'register';
+                return true;
+              }).length === 0 && (
+                <tr><td colSpan="5" style={{padding:'20px',color:'#94a3b8',textAlign:'center'}}>Aucune activité enregistrée</td></tr>
+              )}
             </tbody>
           </table>
         </div>

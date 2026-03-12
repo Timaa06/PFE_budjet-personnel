@@ -135,3 +135,152 @@
 .login-footer a:hover {
   text-decoration: underline;
 }
+
+/* MOT DE PASSE OUBLIÉ */
+.forgot-link-wrap {
+  text-align: right;
+  margin-top: 6px;
+}
+.forgot-link {
+  font-size: 0.82rem;
+  color: #64748b;
+  text-decoration: none;
+}
+.forgot-link:hover {
+  color: #10b981;
+  text-decoration: underline;
+}
+
+/* PAGE RESET SUCCESS */
+.reset-success {
+  text-align: center;
+  padding: 12px 0;
+}
+.reset-success p {
+  color: #334155;
+  font-size: 0.92rem;
+  margin: 12px 0 0;
+}
+.reset-hint {
+  color: #94a3b8 !important;
+  font-size: 0.8rem !important;
+}
+
+.reset-direct-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 24px;
+  background: #6366f1;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.reset-direct-link:hover {
+  background: #4f46e5;
+}
+
+.reset-direct-link-admin {
+  background: #7c3aed;
+}
+.reset-direct-link-admin:hover {
+  background: #6d28d9;
+}
+
+/* SÉLECTION DU RÔLE */
+.role-cards {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0 28px;
+}
+
+.role-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 16px;
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.role-user:hover  { border-color: #10b981; background: #f0fdf4; }
+.role-admin:hover { border-color: #7c3aed; background: #faf5ff; }
+
+.role-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon  { background: #dcfce7; color: #16a34a; }
+.admin-icon { background: #ede9fe; color: #7c3aed; }
+
+.role-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.role-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-align: center;
+}
+
+/* CARTE ADMIN */
+.login-card-admin { border-top: 4px solid #7c3aed; }
+
+.logo-admin {
+  background: #7c3aed !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-admin-login {
+  background: #7c3aed !important;
+}
+.btn-admin-login:hover {
+  background: #6d28d9 !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* BOUTON RETOUR */
+.login-card .back-role-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 18px auto 0;
+  background: none !important;
+  border: none;
+  color: #64748b !important;
+  font-size: 0.84rem;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.login-card .back-role-btn:hover {
+  color: #334155 !important;
+  background: #f1f5f9 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}

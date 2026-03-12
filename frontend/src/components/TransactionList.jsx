@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Pencil, Trash2, Search, SlidersHorizontal, Download } from 'lucide-react';
+import { Pencil, Trash2, Search, SlidersHorizontal, Download, FileText } from 'lucide-react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import './TransactionList.css';
 
 function TransactionList() {
@@ -101,7 +103,50 @@ function TransactionList() {
     a.href = url;
     a.download = `transactions_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
-    URL.revokeObjectURL(url);
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    const date = new Date().toLocaleDateString('fr-FR');
+
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Rapport de transactions', 14, 20);
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100);
+    doc.text(`Généré le ${date}`, 14, 28);
+
+    const totalIncome  = filteredTransactions.filter(t => t.type === 'income').reduce((s, t) => s + parseFloat(t.amount), 0);
+    const totalExpense = filteredTransactions.filter(t => t.type === 'expense').reduce((s, t) => s + parseFloat(t.amount), 0);
+    doc.text(`Revenus : ${totalIncome.toFixed(2)} €   |   Dépenses : ${totalExpense.toFixed(2)} €   |   Solde : ${(totalIncome - totalExpense).toFixed(2)} €`, 14, 36);
+
+    doc.setTextColor(0);
+    autoTable(doc, {
+      startY: 44,
+      head: [['Date', 'Description', 'Catégorie', 'Type', 'Montant (€)']],
+      body: filteredTransactions.map(t => [
+        new Date(t.date).toLocaleDateString('fr-FR'),
+        t.description || '—',
+        t.category_name || '—',
+        t.type === 'income' ? 'Revenu' : 'Dépense',
+        (t.type === 'income' ? '+' : '-') + parseFloat(t.amount).toFixed(2),
+      ]),
+      headStyles: { fillColor: [15, 23, 42], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+      didParseCell: (data) => {
+        if (data.column.index === 4 && data.section === 'body') {
+          const val = data.cell.raw;
+          data.cell.styles.textColor = val.startsWith('+') ? [16, 185, 129] : [239, 68, 68];
+          data.cell.styles.fontStyle = 'bold';
+        }
+      },
+      styles: { fontSize: 9, cellPadding: 4 },
+      margin: { left: 14, right: 14 },
+    });
+
+    doc.save(`transactions_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   const handleDelete = async (id) => {
@@ -170,7 +215,10 @@ function TransactionList() {
             )}
           </div>
           <button className="btn-export" onClick={handleExport}>
-            <Download size={15} /> Exporter
+            <Download size={15} /> CSV
+          </button>
+          <button className="btn-export btn-export-pdf" onClick={handleExportPDF}>
+            <FileText size={15} /> PDF
           </button>
         </div>
       </div>

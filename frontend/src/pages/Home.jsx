@@ -7,6 +7,9 @@ import TransactionForm from '../components/TransactionForm';
 import GoalList from '../components/GoalList';
 import Stats from '../components/Stats';
 import AdminDashboard from './AdminDashboard';
+import ProfileModal from '../components/ProfileModal';
+import NeedsManager from '../components/NeedsManager';
+import RemindersPanel from '../components/RemindersPanel';
 import './Home.css';
 import {
   LayoutDashboard,
@@ -16,15 +19,17 @@ import {
   Plus,
   User,
   LogOut,
-  Shield
+  Shield,
+  ListChecks
 } from 'lucide-react';
 
 function Home() {
   const { logout, user } = useContext(AuthContext);
   const isAdmin = user?.is_admin || false;
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState(isAdmin ? 'admin' : 'dashboard');
   const [showTransactionModal, setShowTransactionModal] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleLogout = () => {
@@ -50,18 +55,22 @@ function Home() {
         </div>
 
         <div className="navbar-right">
-          <button
-            className="btn-new-transaction"
-            onClick={() => setShowTransactionModal(true)}
-          >
-            <Plus size={18} />
-            <span>Nouvelle transaction</span>
-          </button>
-          
-          <button className="profile-btn">
+          {!isAdmin && (
+            <button
+              className="btn-new-transaction"
+              onClick={() => setShowTransactionModal(true)}
+            >
+              <Plus size={18} />
+              <span>Nouvelle transaction</span>
+            </button>
+          )}
+
+          {!isAdmin && <RemindersPanel />}
+
+          <button className="profile-btn" onClick={() => setShowProfile(true)}>
             <User size={20} />
           </button>
-          
+
           <button className="logout-btn" onClick={handleLogout}>
             <LogOut size={18} />
             <span>Déconnexion</span>
@@ -71,37 +80,48 @@ function Home() {
 
       {/* TABS */}
       <div className="tabs">
-        <button 
-          className={`tab ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          <LayoutDashboard size={18} />
-          <span>Tableau de bord</span>
-        </button>
-        <button 
-          className={`tab ${activeTab === 'transactions' ? 'active' : ''}`}
-          onClick={() => setActiveTab('transactions')}
-        >
-          <CreditCard size={18} />
-          <span>Transactions</span>
-        </button>
-        <button 
-          className={`tab ${activeTab === 'stats' ? 'active' : ''}`}
-          onClick={() => setActiveTab('stats')}
-        >
-          <TrendingUp size={18} />
-          <span>Statistiques</span>
-        </button>
-        <button
-          className={`tab ${activeTab === 'goals' ? 'active' : ''}`}
-          onClick={() => setActiveTab('goals')}
-        >
-          <Target size={18} />
-          <span>Objectifs</span>
-        </button>
+        {!isAdmin && (
+          <>
+            <button
+              className={`tab ${activeTab === 'dashboard' ? 'active' : ''}`}
+              onClick={() => setActiveTab('dashboard')}
+            >
+              <LayoutDashboard size={18} />
+              <span>Tableau de bord</span>
+            </button>
+            <button
+              className={`tab ${activeTab === 'transactions' ? 'active' : ''}`}
+              onClick={() => setActiveTab('transactions')}
+            >
+              <CreditCard size={18} />
+              <span>Transactions</span>
+            </button>
+            <button
+              className={`tab ${activeTab === 'stats' ? 'active' : ''}`}
+              onClick={() => setActiveTab('stats')}
+            >
+              <TrendingUp size={18} />
+              <span>Statistiques</span>
+            </button>
+            <button
+              className={`tab ${activeTab === 'goals' ? 'active' : ''}`}
+              onClick={() => setActiveTab('goals')}
+            >
+              <Target size={18} />
+              <span>Objectifs</span>
+            </button>
+            <button
+              className={`tab ${activeTab === 'needs' ? 'active' : ''}`}
+              onClick={() => setActiveTab('needs')}
+            >
+              <ListChecks size={18} />
+              <span>Besoins & Tâches</span>
+            </button>
+          </>
+        )}
         {isAdmin && (
           <button
-            className={`tab tab-admin ${activeTab === 'admin' ? 'active' : ''}`}
+            className={`tab tab-admin active`}
             onClick={() => setActiveTab('admin')}
           >
             <Shield size={18} />
@@ -116,8 +136,14 @@ function Home() {
         {activeTab === 'transactions' && <TransactionList key={refreshKey} />}
         {activeTab === 'stats' && <Stats key={refreshKey} />}
         {activeTab === 'goals' && <GoalList key={refreshKey} />}
+        {activeTab === 'needs' && <NeedsManager />}
         {activeTab === 'admin' && isAdmin && <AdminDashboard />}
       </main>
+
+      {/* MODAL PROFIL */}
+      {showProfile && (
+        <ProfileModal onClose={() => setShowProfile(false)} isAdmin={isAdmin} />
+      )}
 
       {/* MODAL TRANSACTION */}
       {showTransactionModal && (

@@ -89,6 +89,15 @@
   background: var(--background);
 }
 
+.btn-export-pdf {
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+.btn-export-pdf:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
 .btn-filter.active {
   background: #1f2937;
   color: white;
