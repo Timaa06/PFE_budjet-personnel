@@ -395,3 +395,79 @@
 }
 .needs-empty p { margin: 4px 0; font-size: 0.9rem; }
 .needs-empty p:first-child { font-size: 1rem; font-weight: 600; color: #64748b; }
+
+/* ===================================
+   RESPONSIVE MOBILE
+   =================================== */
+
+@media (max-width: 768px) {
+  .needs-manager {
+    padding: 16px;
+  }
+
+  .needs-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-add-need {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Carte besoin : reorganiser en colonne */
+  .need-card-header {
+    padding: 12px 14px;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .need-card-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .need-category-badge {
+    font-size: 0.72rem;
+  }
+
+  .need-card-title {
+    font-size: 0.9rem;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .need-card-desc {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .need-card-right {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .need-priority-badge {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+  }
+
+  .need-progress-bar {
+    width: 40px;
+  }
+
+  /* Formulaires */
+  .need-form-row {
+    flex-direction: column;
+  }
+
+  .need-form-row select {
+    width: 100%;
+  }
+
+  .task-form-row {
+    flex-direction: column;
+  }
+}

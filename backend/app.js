@@ -16,7 +16,7 @@ const { startReminderJob } = require('./jobs/reminderJob');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: (origin, callback) => callback(null, true),
   credentials: true
 }));
 app.use(express.json());

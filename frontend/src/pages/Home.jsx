@@ -140,6 +140,32 @@ function Home() {
         {activeTab === 'admin' && isAdmin && <AdminDashboard />}
       </main>
 
+      {/* BOTTOM NAV MOBILE */}
+      {!isAdmin && (
+        <nav className="tabs-mobile">
+          <button className={`tab-mobile ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
+            <LayoutDashboard size={20} />
+            <span>Accueil</span>
+          </button>
+          <button className={`tab-mobile ${activeTab === 'transactions' ? 'active' : ''}`} onClick={() => setActiveTab('transactions')}>
+            <CreditCard size={20} />
+            <span>Transactions</span>
+          </button>
+          <button className={`tab-mobile ${activeTab === 'stats' ? 'active' : ''}`} onClick={() => setActiveTab('stats')}>
+            <TrendingUp size={20} />
+            <span>Stats</span>
+          </button>
+          <button className={`tab-mobile ${activeTab === 'goals' ? 'active' : ''}`} onClick={() => setActiveTab('goals')}>
+            <Target size={20} />
+            <span>Objectifs</span>
+          </button>
+          <button className={`tab-mobile ${activeTab === 'needs' ? 'active' : ''}`} onClick={() => setActiveTab('needs')}>
+            <ListChecks size={20} />
+            <span>Besoins</span>
+          </button>
+        </nav>
+      )}
+
       {/* MODAL PROFIL */}
       {showProfile && (
         <ProfileModal onClose={() => setShowProfile(false)} isAdmin={isAdmin} />

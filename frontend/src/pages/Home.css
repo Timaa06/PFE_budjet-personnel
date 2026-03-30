@@ -192,10 +192,6 @@
     padding: 12px 16px;
   }
 
-  .navbar-left {
-    gap: 12px;
-  }
-
   .logo-text {
     display: none;
   }
@@ -206,6 +202,10 @@
 
   .btn-new-transaction {
     padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
   }
 
   .logout-btn span {
@@ -216,19 +216,58 @@
     padding: 8px;
   }
 
+  /* Tabs → bottom navigation bar */
   .tabs {
-    padding: 0 16px;
-  }
-
-  .tab span {
     display: none;
   }
 
-  .tab {
-    padding: 14px;
+  .tabs-mobile {
+    display: flex !important;
   }
 
   .main-content {
     padding: 16px;
   }
+}
+
+/* ===================================
+   BOTTOM NAV MOBILE
+   =================================== */
+
+.tabs-mobile {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+  z-index: 500;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+
+.tab-mobile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tab-mobile.active {
+  color: #10b981;
+}
+
+.tab-mobile svg {
+  flex-shrink: 0;
 }

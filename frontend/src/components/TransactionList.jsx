@@ -223,7 +223,8 @@ function TransactionList() {
         </div>
       </div>
 
-      <div className="transactions-table">
+      {/* TABLE desktop */}
+      <div className="transactions-table desktop-only">
         <table>
           <thead>
             <tr>
@@ -254,32 +255,44 @@ function TransactionList() {
                     {parseFloat(transaction.amount).toFixed(2)} €
                   </td>
                   <td className="transaction-actions">
-                    <button
-                      className="btn-edit-small"
-                      onClick={() => handleEdit(transaction)}
-                      title="Modifier"
-                    >
+                    <button className="btn-edit-small" onClick={() => handleEdit(transaction)} title="Modifier">
                       <Pencil size={15} />
                     </button>
-                    <button
-                      className="btn-delete-small"
-                      onClick={() => handleDelete(transaction.id)}
-                      title="Supprimer"
-                    >
+                    <button className="btn-delete-small" onClick={() => handleDelete(transaction.id)} title="Supprimer">
                       <Trash2 size={15} />
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="5" className="no-data">
-                  Aucune transaction trouvée
-                </td>
-              </tr>
+              <tr><td colSpan="5" className="no-data">Aucune transaction trouvée</td></tr>
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* CARTES mobile */}
+      <div className="transactions-cards mobile-only">
+        {pagedTransactions.length > 0 ? pagedTransactions.map(transaction => (
+          <div key={transaction.id} className="transaction-card">
+            <div className="transaction-card-left">
+              <span className={`category-badge ${transaction.type}`}>{transaction.category_name}</span>
+              <span className="transaction-card-desc">{transaction.description}</span>
+              <span className="transaction-card-date">{new Date(transaction.date).toLocaleDateString('fr-FR')}</span>
+            </div>
+            <div className="transaction-card-right">
+              <span className={`transaction-amount ${transaction.type}`}>
+                {transaction.type === 'income' ? '+' : '-'}{parseFloat(transaction.amount).toFixed(2)} €
+              </span>
+              <div className="transaction-actions">
+                <button className="btn-edit-small" onClick={() => handleEdit(transaction)}><Pencil size={14} /></button>
+                <button className="btn-delete-small" onClick={() => handleDelete(transaction.id)}><Trash2 size={14} /></button>
+              </div>
+            </div>
+          </div>
+        )) : (
+          <div className="no-data">Aucune transaction trouvée</div>
+        )}
       </div>
 
       {/* PAGINATION */}
